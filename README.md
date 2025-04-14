@@ -74,6 +74,7 @@ Create a .env file in the root directory and add:
 - No Clear Error UI:
 
   - Network or API errors are only shown via snackbars. A better error page or retry button could enhance UX.
+  - Hero animations while navigating to article details page and shimmer effects while loading the artciles can provide better UX.
 
 - Search API Rate Limit:
 
