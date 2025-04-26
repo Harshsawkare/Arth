@@ -1,4 +1,6 @@
 import 'package:arth_ai/models/source_model.dart';
+import 'package:arth_ai/utils/constants.dart';
+import 'package:arth_ai/utils/helper.dart';
 import 'package:hive/hive.dart';
 
 part 'article_model.g.dart';
@@ -29,6 +31,9 @@ class Article {
   @HiveField(7)
   final String? content;
 
+  @HiveField(8)
+  final String uniqueId;
+
   Article({
     this.source,
     this.author,
@@ -38,29 +43,32 @@ class Article {
     this.urlToImage,
     this.publishedAt,
     this.content,
-  });
+    String? uniqueId,
+  }) : uniqueId = uniqueId ?? Helper.generateUniqueId();
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
-    source: json['source'] != null
-        ? Source.fromJson(json['source'])
+    source: json[Constants.source] != null
+        ? Source.fromJson(json[Constants.source])
         : null,
-    author: json['author'],
-    title: json['title'],
-    description: json['description'],
-    url: json['url'],
-    urlToImage: json['urlToImage'],
-    publishedAt: json['publishedAt'],
-    content: json['content'],
+    author: json[Constants.author],
+    title: json[Constants.title],
+    description: json[Constants.description],
+    url: json[Constants.url],
+    urlToImage: json[Constants.urlToImage],
+    publishedAt: json[Constants.publishedAt],
+    content: json[Constants.content],
+    uniqueId: json[Constants.uniqueId],
   );
 
   Map<String, dynamic> toJson() => {
-    'source': source?.toJson(),
-    'author': author,
-    'title': title,
-    'description': description,
-    'url': url,
-    'urlToImage': urlToImage,
-    'publishedAt': publishedAt,
-    'content': content,
+    Constants.source: source?.toJson(),
+    Constants.author: author,
+    Constants.title: title,
+    Constants.description: description,
+    Constants.url: url,
+    Constants.urlToImage: urlToImage,
+    Constants.publishedAt: publishedAt,
+    Constants.content: content,
+    Constants.uniqueId: uniqueId,
   };
 }

@@ -55,4 +55,12 @@ class SearchBoxController extends GetxController {
   Future<void> submitSearch(String keyword) async {
     await newsController.searchNews(keyword.trim());
   }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    focusNode.close();
+    newsController.dispose();
+    super.dispose();
+  }
 }

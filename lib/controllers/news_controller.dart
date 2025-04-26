@@ -1,7 +1,7 @@
 // news_controller.dart
 import 'package:arth_ai/services/api_service.dart';
+import 'package:arth_ai/utils/constants.dart';
 import 'package:arth_ai/views/widgets/snackbar.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/article_model.dart';
 import '../services/connectivity_service.dart';
@@ -44,34 +44,30 @@ class NewsController extends GetxController {
     isLoading.value = true;
 
     if (connectivity.isOnline.value) {
-      try {
-        if (keyword.isNotEmpty) {
-          final fetchedArticles = await ApiService()
-              .searchArticles(query: keyword, page: page.value);
+      if (keyword.isNotEmpty) {
+        final fetchedArticles =
+            await ApiService().searchArticles(query: keyword, page: page.value);
 
-          if (reset) {
-            await localDbRepository.deleteKeyword(keyword);
-            await localDbRepository.addSearchResult(keyword, fetchedArticles);
-          }
-
-          articles.addAll(fetchedArticles);
-          page.value += 1;
-        } else {
-          AppSnackbar.showSnackbar(
-            'Invalid search text',
-            'Please enter a valid data.',
-          );
+        if (reset) {
+          await localDbRepository.deleteKeyword(keyword);
+          await localDbRepository.addSearchResult(keyword, fetchedArticles);
         }
-      } catch (e) {
-        debugPrint('Error fetching news: $e');
+
+        articles.addAll(fetchedArticles);
+        page.value += 1;
+      } else {
+        AppSnackbar.showSnackbar(
+          Constants.invalidSearchTextTitle,
+          Constants.invalidSearchTextMessage,
+        );
       }
     } else {
       final offlineArticles = localDbRepository.getArticlesForKeyword(keyword);
       if (reset) articles.clear();
-      if(showInternetSnackbar){
+      if (showInternetSnackbar) {
         AppSnackbar.showSnackbar(
-          'No Internet connection.',
-          'You can try checking your internet connection or get the recent new based on your search history.',
+          Constants.noConnectionTitle,
+          Constants.noConnectionMessage,
         );
       }
       articles.addAll(offlineArticles);

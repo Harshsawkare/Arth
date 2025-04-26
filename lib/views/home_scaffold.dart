@@ -30,16 +30,17 @@ class HomeScaffold extends StatefulWidget {
 class _HomeScaffoldState extends State<HomeScaffold> {
   /// Repository for accessing locally stored data like search history.
   final LocalDbRepository localDbRepository = LocalDbRepository();
-  
+
   /// Controller for managing news data and operations.
   final NewsController newsController = Get.find<NewsController>();
-  
+
   /// Controller for managing theme-related operations.
   final ThemeController themeController = Get.find<ThemeController>();
-  
+
   /// Controller for managing search box state and operations.
-  final SearchBoxController searchBoxController = Get.find<SearchBoxController>();
-  
+  final SearchBoxController searchBoxController =
+      Get.find<SearchBoxController>();
+
   /// Builds the widget tree for the home screen.
   ///
   /// This method constructs the UI for the home screen including the app bar,
@@ -126,7 +127,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                       newsController.articles.isEmpty) ...[
                     const Spacer(),
                     Image.asset(
-                      'assets/empty_list_text.png',
+                      Constants.emptyListIllustrationPath,
                       width: 200,
                     ),
                     Padding(
@@ -142,7 +143,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                       flex: 2,
                     ),
                   ],
-                  NewsListView()
+                  const NewsListView()
                 ],
               );
             }),

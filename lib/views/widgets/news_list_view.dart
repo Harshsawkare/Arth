@@ -1,5 +1,8 @@
+import 'package:arth_ai/utils/constants.dart';
+import 'package:arth_ai/views/widgets/shimmer_article_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../controllers/news_controller.dart';
 import 'article_tile.dart';
 
@@ -30,11 +33,12 @@ class _NewsListViewState extends State<NewsListView> {
   void initState() {
     /// Sets up a listener to detect when the user scrolls near the bottom of the list.
     ///
-    /// When the user scrolls within 200 pixels of the bottom, it triggers
+    /// When the user scrolls within [Constants.maxPixelsCloseToBottom] pixels of the bottom, it triggers
     /// the [loadMore] method on the news controller to fetch additional articles.
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 200) {
+          scrollController.position.maxScrollExtent -
+              Constants.maxPixelsCloseToBottom) {
         newsController.loadMore();
       }
     });
@@ -46,12 +50,19 @@ class _NewsListViewState extends State<NewsListView> {
     final theme = Theme.of(context);
     return Obx(() {
       if (newsController.isLoading.value && newsController.articles.isEmpty) {
-        return SizedBox(
-          height: 200,
-          child: Center(
-              child: CircularProgressIndicator(
-            color: theme.primaryColor,
-          )),
+        return Expanded(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Shimmer.fromColors(
+              baseColor: theme.cardColor,
+              highlightColor: theme.disabledColor,
+              child: ListView.builder(
+                  itemCount: 3,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) =>
+                      const ShimmerArticlePlaceholder()),
+            ),
+          ),
         );
       }
 
@@ -83,11 +94,11 @@ class _NewsListViewState extends State<NewsListView> {
     });
   }
 
+  /// Cleans up resources when the widget is removed from the widget tree.
+  ///
+  /// Disposes both the news controller and scroll controller to prevent memory leaks.
   @override
   void dispose() {
-    /// Cleans up resources when the widget is removed from the widget tree.
-    ///
-    /// Disposes both the news controller and scroll controller to prevent memory leaks.
     newsController.dispose();
     scrollController.dispose();
     super.dispose();

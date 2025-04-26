@@ -60,9 +60,9 @@ abstract class LocalDBService {
   /// 
   /// Returns a [Future] that completes when the operation is finished.
   static Future<void> addSearchResult(String keyword, List<Article> articles) async {
-    final limitedArticles = articles.take(10).toList();
+    final limitedArticles = articles.take(Constants.maxSearchArticleLimit).toList();
 
-    if (!box.containsKey(keyword) && box.length >= 5) {
+    if (!box.containsKey(keyword) && box.length >= Constants.maxSearchKeyLimit) {
       // Sort all items by timestamp ascending
       final sorted = box.toMap().entries.toList()
         ..sort((a, b) => a.value.timestamp.compareTo(b.value.timestamp));

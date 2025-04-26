@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 class Helper {
   /// Formats a datetime string into a human-readable relative time format.
   ///
@@ -49,5 +51,12 @@ class Helper {
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
     return months[month - 1];
+  }
+
+  /// This method creates a new instance of Uuid and returns a version 4 UUID,
+  /// which is a randomly generated unique identifier.
+  static String generateUniqueId() {
+    var uuid = Uuid();
+    return uuid.v4(); // Generate a version 4 (random) UUID
   }
 }

@@ -13,7 +13,7 @@ import '../../controllers/search_controller.dart';
 class SearchHistoryChip extends StatefulWidget {
   /// The search keyword to display in the chip.
   final String keyword;
-  
+
   /// Creates a [SearchHistoryChip].
   ///
   /// The [keyword] parameter is required and represents the search term to be displayed.
@@ -26,7 +26,7 @@ class SearchHistoryChip extends StatefulWidget {
 class _SearchHistoryChipState extends State<SearchHistoryChip> {
   final NewsController newsController = Get.find<NewsController>();
   final SearchBoxController searchController = Get.find<SearchBoxController>();
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -47,12 +47,14 @@ class _SearchHistoryChipState extends State<SearchHistoryChip> {
           ),
           backgroundColor: theme.scaffoldBackgroundColor,
           side: BorderSide(
-              color: newsController.searchQuery.value == widget.keyword
-                  ? theme.primaryColor
-                  : theme.disabledColor,
-              width: 1.5),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: newsController.searchQuery.value == widget.keyword
+                ? theme.primaryColor
+                : theme.disabledColor,
+            width: 1.5,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );

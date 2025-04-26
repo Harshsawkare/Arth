@@ -1,4 +1,6 @@
 import 'package:arth_ai/models/article_model.dart';
+import 'package:arth_ai/utils/constants.dart';
+import 'package:arth_ai/views/widgets/empty_image_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,7 @@ class NewsDetailsScaffold extends StatelessWidget {
   const NewsDetailsScaffold({super.key});
 
   @override
+
   /// Builds the UI for the news article details screen.
   ///
   /// This method constructs a scrollable layout that displays all components
@@ -30,6 +33,7 @@ class NewsDetailsScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final article = Get.arguments as Article;
+    final imageUrl = article.urlToImage ?? Constants.emptyImagePath;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -61,19 +65,14 @@ class NewsDetailsScaffold extends StatelessWidget {
                   constraints: const BoxConstraints(
                     minHeight: 150,
                   ),
-                  child: CachedNetworkImage(
-                    width: double.infinity,
-                    imageUrl: article.urlToImage ?? '',
-                    fit: BoxFit.cover,
-                    errorWidget: (context, url, error) => Container(
-                      color: theme.brightness == Brightness.light
-                          ? Colors.black12
-                          : Colors.white12,
-                      child: const Icon(
-                        Icons.language_rounded,
-                        size: 50,
-                        color: Colors.grey,
-                      ),
+                  child: Hero(
+                    tag: article.uniqueId,
+                    child: CachedNetworkImage(
+                      width: double.infinity,
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) =>
+                          const EmptyImageWidget(),
                     ),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:arth_ai/utils/constants.dart';
 import 'package:hive/hive.dart';
 
 part 'source_model.g.dart';
@@ -13,12 +14,12 @@ class Source {
   Source({this.id, this.name});
 
   factory Source.fromJson(Map<String, dynamic> json) => Source(
-    id: json['id'],
-    name: json['name'],
+    id: json[Constants.id],
+    name: json[Constants.name],
   );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
+    Constants.id: id,
+    Constants.name: name,
   };
 }

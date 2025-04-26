@@ -9,6 +9,9 @@ const Color darkSecondaryColor = Color.fromRGBO(249, 255, 254, 1);
 const Color lightScaffoldBackgroundColor = Color.fromRGBO(249, 255, 254, 1);
 const Color darkScaffoldBackgroundColor = Color.fromRGBO(19, 19, 19, 1);
 
+const Color lightCardColor = Color.fromRGBO(235, 241, 239, 1.0);
+const Color darkCardColor = Color.fromRGBO(42, 42, 42, 1.0);
+
 const Color lightIconColor =  Color.fromRGBO(175, 175, 175, 1);
 const Color darkIconColor = Color.fromRGBO(104, 104, 104, 1);
 
@@ -22,6 +25,7 @@ final ThemeData lightTheme = ThemeData(
   primaryColor: lightPrimaryColor,
   highlightColor: lightSecondaryColor,
   scaffoldBackgroundColor: lightScaffoldBackgroundColor,
+  cardColor: lightCardColor,
   disabledColor: lightIconColor,
   textTheme: const TextTheme(
     headlineMedium: TextStyle(
@@ -58,6 +62,7 @@ final ThemeData darkTheme = ThemeData(
   primaryColor: darkPrimaryColor,
   highlightColor: darkSecondaryColor,
   scaffoldBackgroundColor: darkScaffoldBackgroundColor,
+  cardColor: darkCardColor,
   disabledColor: darkIconColor,
   textTheme: const TextTheme(
     headlineMedium: TextStyle(

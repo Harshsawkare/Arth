@@ -1,5 +1,4 @@
 import 'package:arth_ai/utils/constants.dart';
-import 'package:arth_ai/views/home_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +44,7 @@ class _SplashScreenScaffoldState extends State<SplashScreenScaffold> {
       height: Get.height,
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(
-        child: Image.asset('assets/logo.png', width: 100,),
+        child: Image.asset(Constants.logoPath, width: 100,),
       ),
     );
   }

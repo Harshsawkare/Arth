@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'empty_image_widget.dart';
+
 /// A widget that displays a news article in a card-like tile format.
 ///
 /// This widget renders an article with its image, title, description, source,
@@ -26,7 +28,7 @@ class ArticleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final imageUrl = article.urlToImage ?? Constants.emptyImagePath;
     return GestureDetector(
       onTap: () {
         Get.toNamed(
@@ -58,19 +60,14 @@ class ArticleTile extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(10),
                 ),
-                child: CachedNetworkImage(
-                  width: double.infinity,
-                  imageUrl: article.urlToImage ?? '',
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => Container(
-                    color: theme.brightness == Brightness.light
-                        ? Colors.black12
-                        : Colors.white12,
-                    child: const Icon(
-                      Icons.language_rounded,
-                      size: 50,
-                      color: Colors.grey,
-                    ),
+                child: Hero(
+                  tag: article.uniqueId,
+                  child: CachedNetworkImage(
+                    width: double.infinity,
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) =>
+                        const EmptyImageWidget(),
                   ),
                 ),
               ),

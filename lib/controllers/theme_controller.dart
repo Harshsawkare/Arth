@@ -1,3 +1,4 @@
+import 'package:arth_ai/utils/constants.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,7 @@ class ThemeController extends GetxController {
   var isDarkMode = false.obs;
 
   @override
+
   /// Initializes the controller.
   ///
   /// Calls the parent's onInit method and loads the saved theme preference.
@@ -40,7 +42,7 @@ class ThemeController extends GetxController {
   /// defaults to light mode (isDarkMode = false).
   void loadThemeFromPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    isDarkMode.value = prefs.getBool('isDarkMode') ?? false;
+    isDarkMode.value = prefs.getBool(Constants.isDarkMode) ?? false;
     Get.changeTheme(isDarkMode.value ? darkTheme : lightTheme);
   }
 
@@ -49,13 +51,13 @@ class ThemeController extends GetxController {
   /// [isDarkMode] - Boolean indicating whether dark mode is active.
   void saveThemeToPreferences(bool isDarkMode) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isDarkMode', isDarkMode);
+    prefs.setBool(Constants.isDarkMode, isDarkMode);
   }
 
-  @override
   /// Cleans up resources when the controller is removed.
   ///
   /// Resets the theme mode to light and calls the parent's onClose method.
+  @override
   void onClose() {
     isDarkMode.value = false;
     super.onClose();
