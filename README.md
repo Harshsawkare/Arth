@@ -1,6 +1,5 @@
 # Arth.ai
 A Flutter application that fetches and displays the latest news articles using the NewsAPI. The app features light and dark themes, search functionality, offline caching, and pagination.
-<a href="https://drive.google.com/file/d/1zibwTb-LpZ3HuzxRl7jCMWbENrpWLTxP/view?usp=sharing">APK Link</a>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/984543c2-0cc1-49f4-9da1-04e8a25ce120" alt="IMG_8632" height="400"/>
@@ -28,7 +27,7 @@ A Flutter application that fetches and displays the latest news articles using t
 3. Set up the .env file:
 Create a .env file in the root directory and add:
    ```bash
-   NEWS_API_KEY=57f8a53965bc425280ee862d28007014
+   NEWS_API_KEY=YOUR_NEWS_API_KEY
 
 4. Run the App:
    ```bash
@@ -67,14 +66,11 @@ Create a .env file in the root directory and add:
 - Efficient UI Updates:
 
   - Handled with Obx and GetX to make only necessary parts reactive, improving performance and avoiding rebuilds.
+  - Hero animations while navigating to article details page and shimmer effects while loading the artciles provides better UX.
 
 ---
 
 🧩 Known Issues / Areas for Improvement
-- No Clear Error UI:
-
-  - Network or API errors are only shown via snackbars. A better error page or retry button could enhance UX.
-  - Hero animations while navigating to article details page and shimmer effects while loading the artciles can provide better UX.
 
 - Search API Rate Limit:
 
