@@ -1,4 +1,4 @@
-import 'package:arth_ai/utils/constants.dart';
+import 'package:uuid/uuid.dart';
 
 class Helper {
   /// Formats a datetime string into a human-readable relative time format.
@@ -37,7 +37,7 @@ class Helper {
   ///
   /// Returns true if both dates fall on the same year, month, and day.
   static bool isSameDay(DateTime d1, DateTime d2) {
-    return d1.difference(d2).inHours < 24;
+    return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
   }
 
   /// Converts a month number to its three-letter abbreviation.
@@ -47,43 +47,16 @@ class Helper {
   /// Returns the three-letter abbreviation of the month (e.g., "Jan" for 1).
   static String _monthAbbreviation(int month) {
     const months = [
-      Constants.jan,
-      Constants.feb,
-      Constants.mar,
-      Constants.apr,
-      Constants.may,
-      Constants.jun,
-      Constants.jul,
-      Constants.aug,
-      Constants.sep,
-      Constants.oct,
-      Constants.nov,
-      Constants.dec,
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
     return months[month - 1];
   }
 
-  /// Validates if the provided URL is in a correct format.
-  ///
-  /// [url] The URL string to validate.
-  ///
-  /// Returns true if the URL is valid, false otherwise.
-  static bool isValidUrl(String? url) {
-    if (url == null || url.isEmpty) {
-      return false;
-    }
-    final Uri? uri = Uri.tryParse(url);
-    return uri != null &&
-        (uri.isScheme(Constants.http) || uri.isScheme(Constants.https));
-  }
-
-  /// Validates if the search query contains only alphanumeric characters.
-  ///
-  /// [query] The search query string to validate.
-  ///
-  /// Returns true if the query is valid, false otherwise.
-  static bool isValidSearchQuery(String query) {
-    final RegExp regex = RegExp(r'^[a-zA-Z0-9\s]+$');
-    return regex.hasMatch(query);
+  /// This method creates a new instance of Uuid and returns a version 4 UUID,
+  /// which is a randomly generated unique identifier.
+  static String generateUniqueId() {
+    var uuid = Uuid();
+    return uuid.v4(); // Generate a version 4 (random) UUID
   }
 }

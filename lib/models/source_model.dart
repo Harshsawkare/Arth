@@ -6,20 +6,20 @@ part 'source_model.g.dart';
 @HiveType(typeId: 2)
 class Source {
   @HiveField(0)
-  final String? sourceId;
+  final String? id;
 
   @HiveField(1)
-  final String? sourceName;
+  final String? name;
 
-  Source({this.sourceId, this.sourceName});
+  Source({this.id, this.name});
 
   factory Source.fromJson(Map<String, dynamic> json) => Source(
-    sourceId: json[Constants.sourceId],
-    sourceName: json[Constants.sourceName],
+    id: json[Constants.id],
+    name: json[Constants.name],
   );
 
   Map<String, dynamic> toJson() => {
-    Constants.sourceId: sourceId,
-    Constants.sourceName: sourceName,
+    Constants.id: id,
+    Constants.name: name,
   };
 }

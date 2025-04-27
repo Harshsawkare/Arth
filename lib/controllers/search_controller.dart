@@ -10,16 +10,16 @@ import 'news_controller.dart';
 class SearchBoxController extends GetxController {
   /// Indicates whether the search box is currently active.
   var isActive = false.obs;
-
+  
   /// The current text in the search box.
   var searchText = ''.obs;
-
+  
   /// Controller for the search text field.
   final searchController = TextEditingController();
-
+  
   /// Focus node for the search text field.
   final focusNode = FocusNode().obs;
-
+  
   /// Reference to the news controller for performing searches.
   final NewsController newsController = Get.find<NewsController>();
 
@@ -53,10 +53,7 @@ class SearchBoxController extends GetxController {
   /// @param keyword The search term to be submitted.
   /// @return A Future that completes when the search operation is finished.
   Future<void> submitSearch(String keyword) async {
-    await newsController.searchNews(
-      keyword.trim(),
-      true,
-    );
+    await newsController.searchNews(keyword.trim());
   }
 
   @override

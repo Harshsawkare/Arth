@@ -11,7 +11,7 @@ class Article {
   final Source? source;
 
   @HiveField(1)
-  final List? creator;
+  final String? author;
 
   @HiveField(2)
   final String? title;
@@ -20,52 +20,55 @@ class Article {
   final String? description;
 
   @HiveField(4)
-  final String? link;
+  final String? url;
 
   @HiveField(5)
-  final String? imageUrl;
+  final String? urlToImage;
 
   @HiveField(6)
-  final String? pubDate;
+  final String? publishedAt;
 
   @HiveField(7)
-  final String? articleId;
+  final String? content;
+
+  @HiveField(8)
+  final String uniqueId;
 
   Article({
     this.source,
-    this.creator,
+    this.author,
     this.title,
     this.description,
-    this.link,
-    this.imageUrl,
-    this.pubDate,
-    this.articleId,
-  });
+    this.url,
+    this.urlToImage,
+    this.publishedAt,
+    this.content,
+    String? uniqueId,
+  }) : uniqueId = uniqueId ?? Helper.generateUniqueId();
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
-        source: json[Constants.sourceName] != null
-            ? Source.fromJson({
-                Constants.sourceId: json[Constants.sourceId],
-                Constants.sourceName: json[Constants.sourceName],
-              })
-            : null,
-        creator: json[Constants.creator],
-        title: json[Constants.title],
-        description: json[Constants.description],
-        link: json[Constants.link],
-        imageUrl: json[Constants.imageUrl],
-        pubDate: json[Constants.pubDate],
-        articleId: json[Constants.articleId],
-      );
+    source: json[Constants.source] != null
+        ? Source.fromJson(json[Constants.source])
+        : null,
+    author: json[Constants.author],
+    title: json[Constants.title],
+    description: json[Constants.description],
+    url: json[Constants.url],
+    urlToImage: json[Constants.urlToImage],
+    publishedAt: json[Constants.publishedAt],
+    content: json[Constants.content],
+    uniqueId: json[Constants.uniqueId],
+  );
 
   Map<String, dynamic> toJson() => {
-        Constants.source: source?.toJson(),
-        Constants.creator: creator,
-        Constants.title: title,
-        Constants.description: description,
-        Constants.link: link,
-        Constants.imageUrl: imageUrl,
-        Constants.pubDate: pubDate,
-        Constants.articleId: articleId,
-      };
+    Constants.source: source?.toJson(),
+    Constants.author: author,
+    Constants.title: title,
+    Constants.description: description,
+    Constants.url: url,
+    Constants.urlToImage: urlToImage,
+    Constants.publishedAt: publishedAt,
+    Constants.content: content,
+    Constants.uniqueId: uniqueId,
+  };
 }

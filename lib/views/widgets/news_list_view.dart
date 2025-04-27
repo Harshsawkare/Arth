@@ -59,10 +59,8 @@ class _NewsListViewState extends State<NewsListView> {
               child: ListView.builder(
                   itemCount: 3,
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => const Padding(
-                        padding: EdgeInsets.only(bottom: 16),
-                        child: ShimmerArticlePlaceholder(),
-                      )),
+                  itemBuilder: (context, index) =>
+                      const ShimmerArticlePlaceholder()),
             ),
           ),
         );

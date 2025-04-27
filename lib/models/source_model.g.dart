@@ -17,8 +17,8 @@ class SourceAdapter extends TypeAdapter<Source> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Source(
-      sourceId: fields[0] as String?,
-      sourceName: fields[1] as String?,
+      id: fields[0] as String?,
+      name: fields[1] as String?,
     );
   }
 
@@ -27,9 +27,9 @@ class SourceAdapter extends TypeAdapter<Source> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.sourceId)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.sourceName);
+      ..write(obj.name);
   }
 
   @override

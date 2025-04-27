@@ -38,7 +38,6 @@ class _SearchHistoryChipState extends State<SearchHistoryChip> {
           FocusScope.of(context).unfocus();
           return newsController.searchNews(
             widget.keyword,
-            true,
             showInternetSnackbar: false,
           );
         },

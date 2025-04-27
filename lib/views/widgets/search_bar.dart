@@ -1,6 +1,4 @@
 import 'package:arth_ai/utils/constants.dart';
-import 'package:arth_ai/utils/helper.dart';
-import 'package:arth_ai/views/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arth_ai/controllers/search_controller.dart';
@@ -66,7 +64,8 @@ class _SearchBoxState extends State<SearchBox> {
                 focusNode: searchController.focusNode.value,
                 controller: searchController.searchController,
                 onChanged: (val) => searchController.searchText.value = val,
-                onSubmitted: (val) => submitSearch(),
+                onSubmitted: (val) => searchController
+                    .submitSearch(searchController.searchText.value),
                 onTap: searchController.activate,
                 cursorColor: theme.primaryColor,
                 style: theme.textTheme.bodyMedium,
@@ -81,7 +80,8 @@ class _SearchBoxState extends State<SearchBox> {
             ),
             if (searchController.isActive.value)
               GestureDetector(
-                onTap: () async => submitSearch(),
+                onTap: () async => searchController
+                    .submitSearch(searchController.searchText.value),
                 child: Icon(
                   Icons.chevron_right_rounded,
                   color: theme.iconTheme.color,
@@ -92,26 +92,6 @@ class _SearchBoxState extends State<SearchBox> {
         ),
       );
     });
-  }
-
-  /// Submits the current search query if it is valid.
-  ///
-  /// This function retrieves the current search text from the search controller,
-  /// trims any leading or trailing whitespace, and checks if the query is valid.
-  /// If the query is valid, it submits the search using the search controller.
-  /// Otherwise, it displays a snackbar with an error message.
-  ///
-  /// Returns a [Future] that completes when the search submission process is finished.
-  Future<void> submitSearch() async {
-    String query = searchController.searchText.value.trim();
-    if (Helper.isValidSearchQuery(query)) {
-      await searchController.submitSearch(query);
-    } else {
-      AppSnackbar.showSnackbar(
-        Constants.invalidSearchTextTitle,
-        Constants.invalidSearchTextMessage,
-      );
-    }
   }
 
   /// Disposes resources used by the search box.
