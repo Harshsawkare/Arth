@@ -28,7 +28,7 @@ class ArticleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final imageUrl = article.urlToImage ?? Constants.emptyImagePath;
+    final imageUrl = article.imageUrl ?? Constants.emptyImagePath;
     return GestureDetector(
       onTap: () {
         Get.toNamed(
@@ -61,7 +61,7 @@ class ArticleTile extends StatelessWidget {
                   top: Radius.circular(10),
                 ),
                 child: Hero(
-                  tag: article.uniqueId,
+                  tag: article.articleId ?? '',
                   child: CachedNetworkImage(
                     width: double.infinity,
                     imageUrl: imageUrl,
@@ -115,12 +115,12 @@ class ArticleTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          article.source?.name ?? '',
+                          article.source?.sourceName ?? '',
                           style: theme.textTheme.bodySmall,
                         ),
                         const Spacer(),
                         Text(
-                          Helper.formatDateTime(article.publishedAt ?? ''),
+                          Helper.formatDateTime(article.pubDate ?? ''),
                           style: theme.textTheme.bodySmall,
                         ),
                       ],

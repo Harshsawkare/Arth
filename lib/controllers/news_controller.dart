@@ -8,14 +8,13 @@ import '../services/connectivity_service.dart';
 import '../services/local_db_repository.dart';
 
 class NewsController extends GetxController {
-  // final newsApiService = NewsApiService();
   final localDbRepository = LocalDbRepository();
   final connectivity = Get.find<ConnectivityService>();
 
   var articles = <Article>[].obs;
   var isLoading = false.obs;
   var searchQuery = ''.obs;
-  var page = 1.obs;
+  var showWebView = false.obs;
 
   /// Searches for news articles based on the provided keyword.
   ///
@@ -31,12 +30,12 @@ class NewsController extends GetxController {
   ///
   /// Returns a [Future<void>] that completes when the search operation is finished.
   Future<void> searchNews(
-    String keyword, {
+    String keyword,
+    bool newApiCall, {
     bool reset = true,
     bool showInternetSnackbar = true,
   }) async {
     if (reset) {
-      page.value = 1;
       articles.clear();
     }
 
@@ -45,16 +44,24 @@ class NewsController extends GetxController {
 
     if (connectivity.isOnline.value) {
       if (keyword.isNotEmpty) {
-        final fetchedArticles =
-            await ApiService().searchArticles(query: keyword, page: page.value);
+        final fetchedArticles = await ApiService().searchArticles(
+          query: keyword,
+          newApiCall: newApiCall,
+        );
 
-        if (reset) {
-          await localDbRepository.deleteKeyword(keyword);
-          await localDbRepository.addSearchResult(keyword, fetchedArticles);
+        if (fetchedArticles.isNotEmpty) {
+          if (reset) {
+            await localDbRepository.deleteKeyword(keyword);
+            await localDbRepository.addSearchResult(keyword, fetchedArticles);
+          }
+
+          articles.addAll(fetchedArticles);
+        } else {
+          AppSnackbar.showSnackbar(
+            Constants.emptyListTitle,
+            Constants.emptyListMessage,
+          );
         }
-
-        articles.addAll(fetchedArticles);
-        page.value += 1;
       } else {
         AppSnackbar.showSnackbar(
           Constants.invalidSearchTextTitle,
@@ -76,12 +83,30 @@ class NewsController extends GetxController {
     isLoading.value = false;
   }
 
+  /// Loads more news articles by performing an additional search query.
+  ///
+  /// This function checks if a search operation is not already in progress and
+  /// if the device is online. If both conditions are met, it fetches more articles
+  /// based on the current search query without resetting the existing list of articles.
+  ///
+  /// Returns a [Future<void>] that completes when the load operation is finished.
   void loadMore() async {
     if (!isLoading.value && connectivity.isOnline.value) {
-      await searchNews(searchQuery.value, reset: false);
+      await searchNews(
+        searchQuery.value,
+        false,
+        reset: false,
+      );
     }
   }
 
+  /// Deletes the stored search results for a specific keyword from the local database.
+  ///
+  /// This function removes all cached articles associated with the provided keyword,
+  /// freeing up storage space and ensuring outdated data is not used in future searches.
+  ///
+  /// Parameters:
+  /// - [keyword]: The search term whose associated cached articles should be deleted.
   void deleteOldKeyword(String keyword) {
     localDbRepository.deleteKeyword(keyword);
   }
@@ -91,7 +116,6 @@ class NewsController extends GetxController {
     articles.clear();
     isLoading.value = false;
     searchQuery.value = '';
-    page.value = 1;
     super.onClose();
   }
 }

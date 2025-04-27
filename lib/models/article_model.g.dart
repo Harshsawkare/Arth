@@ -18,13 +18,13 @@ class ArticleAdapter extends TypeAdapter<Article> {
     };
     return Article(
       source: fields[0] as Source?,
-      author: fields[1] as String?,
+      creator: (fields[1] as List?),
       title: fields[2] as String?,
       description: fields[3] as String?,
-      url: fields[4] as String?,
-      urlToImage: fields[5] as String?,
-      publishedAt: fields[6] as String?,
-      content: fields[7] as String?,
+      link: fields[4] as String?,
+      imageUrl: fields[5] as String?,
+      pubDate: fields[6] as String?,
+      articleId: fields[7] as String?,
     );
   }
 
@@ -35,19 +35,19 @@ class ArticleAdapter extends TypeAdapter<Article> {
       ..writeByte(0)
       ..write(obj.source)
       ..writeByte(1)
-      ..write(obj.author)
+      ..write(obj.creator)
       ..writeByte(2)
       ..write(obj.title)
       ..writeByte(3)
       ..write(obj.description)
       ..writeByte(4)
-      ..write(obj.url)
+      ..write(obj.link)
       ..writeByte(5)
-      ..write(obj.urlToImage)
+      ..write(obj.imageUrl)
       ..writeByte(6)
-      ..write(obj.publishedAt)
+      ..write(obj.pubDate)
       ..writeByte(7)
-      ..write(obj.content);
+      ..write(obj.articleId);
   }
 
   @override
