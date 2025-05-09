@@ -9,6 +9,8 @@ class Constants {
 
   // API endpoints
   static const String baseNewsUrl = 'https://newsapi.org/v2/everything';
+  static const String http = 'http';
+  static const String https = 'https';
 
   // Keys for API requests
   static const String query = 'q';
@@ -58,8 +60,23 @@ class Constants {
   static const String id = 'id';
   static const String name = 'name';
 
+  // Date constants
+  static const String jan = 'Jan';
+  static const String feb = 'Feb';
+  static const String mar = 'Mar';
+  static const String apr = 'Apr';
+  static const String may = 'May';
+  static const String jun = 'Jun';
+  static const String jul = 'Jul';
+  static const String aug = 'Aug';
+  static const String sep = 'Sep';
+  static const String oct = 'Oct';
+  static const String nov = 'Nov';
+  static const String dec = 'Dec';
+
   // Other
   static const int maxPixelsCloseToBottom = 100;
+  static const String viewDetails = 'View Details';
   static const String logoPath = 'assets/logo.png';
   static const String emptyImagePath =
       'https://images.unsplash.com/36/fVSwTG05QIaE9FN7tLQ5_IMG_1122.jpg?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';

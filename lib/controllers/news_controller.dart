@@ -16,6 +16,7 @@ class NewsController extends GetxController {
   var isLoading = false.obs;
   var searchQuery = ''.obs;
   var page = 1.obs;
+  var showWebView = false.obs;
 
   /// Searches for news articles based on the provided keyword.
   ///
