@@ -114,9 +114,14 @@ class ArticleTile extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          article.source?.sourceName ?? '',
-                          style: theme.textTheme.bodySmall,
+                        SizedBox(
+                          width: Get.width * 0.4,
+                          child: Text(
+                            article.source?.sourceName ?? '',
+                            style: theme.textTheme.bodySmall,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         const Spacer(),
                         Text(

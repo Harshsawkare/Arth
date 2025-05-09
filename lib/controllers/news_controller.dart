@@ -2,6 +2,7 @@
 import 'package:arth_ai/services/api_service.dart';
 import 'package:arth_ai/utils/constants.dart';
 import 'package:arth_ai/views/widgets/snackbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../models/article_model.dart';
 import '../services/connectivity_service.dart';
@@ -10,6 +11,11 @@ import '../services/local_db_repository.dart';
 class NewsController extends GetxController {
   final localDbRepository = LocalDbRepository();
   final connectivity = Get.find<ConnectivityService>();
+
+  /// Controller that manages the scrolling behavior of the list.
+  ///
+  /// Used to detect when the user has scrolled near the bottom to trigger loading more articles.
+  final Rx<ScrollController> scrollController = ScrollController().obs;
 
   var articles = <Article>[].obs;
   var isLoading = false.obs;
@@ -109,6 +115,21 @@ class NewsController extends GetxController {
   /// - [keyword]: The search term whose associated cached articles should be deleted.
   void deleteOldKeyword(String keyword) {
     localDbRepository.deleteKeyword(keyword);
+  }
+
+  /// Scrolls the list to the top position.
+  ///
+  /// This function animates the scroll position of the list to the top,
+  /// providing a smooth scrolling effect.
+  ///
+  /// The animation duration is set to 300 milliseconds, and the curve used
+  /// for the animation is [Curves.easeInOut].
+  void scrollToTop() {
+    scrollController.value.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override

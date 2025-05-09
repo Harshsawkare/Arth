@@ -150,6 +150,16 @@ class _HomeScaffoldState extends State<HomeScaffold> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: theme.primaryColor,
+        onPressed: () => newsController.scrollToTop(),
+        child: Icon(
+          Icons.arrow_upward_rounded,
+          color: theme.scaffoldBackgroundColor,
+          size: theme.iconTheme.size,
+        ),
+      ),
     );
   }
 

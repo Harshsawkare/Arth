@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:arth_ai/utils/constants.dart';
 import 'package:arth_ai/views/widgets/shimmer_article_placeholder.dart';
 import 'package:flutter/material.dart';
@@ -24,20 +26,15 @@ class _NewsListViewState extends State<NewsListView> {
   /// Controller that manages the news articles data and loading state.
   final NewsController newsController = Get.find<NewsController>();
 
-  /// Controller that manages the scrolling behavior of the list.
-  ///
-  /// Used to detect when the user has scrolled near the bottom to trigger loading more articles.
-  final ScrollController scrollController = ScrollController();
-
   @override
   void initState() {
     /// Sets up a listener to detect when the user scrolls near the bottom of the list.
     ///
     /// When the user scrolls within [Constants.maxPixelsCloseToBottom] pixels of the bottom, it triggers
     /// the [loadMore] method on the news controller to fetch additional articles.
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent -
+    newsController.scrollController.value.addListener(() {
+      if (newsController.scrollController.value.position.pixels >=
+          newsController.scrollController.value.position.maxScrollExtent -
               Constants.maxPixelsCloseToBottom) {
         newsController.loadMore();
       }
@@ -74,7 +71,7 @@ class _NewsListViewState extends State<NewsListView> {
             child: CustomScrollView(
               physics: const ClampingScrollPhysics(),
               cacheExtent: 1000,
-              controller: scrollController,
+              controller: newsController.scrollController.value,
               slivers: [
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
@@ -102,7 +99,7 @@ class _NewsListViewState extends State<NewsListView> {
   @override
   void dispose() {
     newsController.dispose();
-    scrollController.dispose();
+    newsController.scrollController.value.dispose();
     super.dispose();
   }
 }
