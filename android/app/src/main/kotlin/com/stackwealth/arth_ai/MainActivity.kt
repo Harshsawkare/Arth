@@ -1,4 +1,4 @@
-package com.stackwealth.arth_ai
+package com.arthai.app
 
 import io.flutter.embedding.android.FlutterActivity
 
