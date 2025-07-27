@@ -1,4 +1,4 @@
-# Arth.ai
+# Arth
 A Flutter application that fetches and displays the latest news articles using the NewsAPI. The app features light and dark themes, search functionality, offline caching, and pagination.
 
 <p align="center">
